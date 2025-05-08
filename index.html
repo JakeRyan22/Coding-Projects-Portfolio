@@ -69,6 +69,23 @@
     .about-content {
     display: flex;
     align-items: center;
+    gap: 20px;
+}
+
+/* Stack vertically on small screens */
+@media (max-width: 600px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-content p {
+        margin-top: 10px;
+    }
+}
+    .about-content {
+    display: flex;
+    align-items: center;
     gap: 20px; /* space between the image and text */
 }
 
