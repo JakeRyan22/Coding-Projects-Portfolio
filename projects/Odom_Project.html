@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Senior Design Project</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        background-color: #f4f4f4;
+    }
+    header {
+        background: #696969;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+    nav {
+        margin-top: 10px;
+    }
+    nav a {
+        color: #fff;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+    }
+    main {
+        padding: 20px;
+    }
+    section {
+        padding: 20px;
+        margin: 20px 0;
+        background: #fff;
+        border-radius: 8px;
+    }
+    footer {
+        text-align: center;
+        padding: 10px;
+        background: #696969;
+        color: #fff;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* MOBILE RESPONSIVENESS */
+    @media (max-width: 600px) {
+        nav a {
+            display: block;
+            margin: 10px 0;
+        }
+        section {
+            margin: 10px 0;
+            padding: 15px;
+        }
+    }
+</style>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header>
+  <h1>Senior Design: Odometry and Sensor Fusion</h1>
+  <nav>
+    <a href="../index.html">Home</a>
+  </nav>
+</header>
+
+<main>
+  <section>
+    <h2>Abstract</h2>
+    <p>Tracking the position of a wheeled mobile robot is conceptually intuitive, but challenging to implement in practice. Common issues include unpredictable wheel dynamics under varying slip conditions, drift in measurements taken in the robot’s body frame, and the high, dynamic variance of global reference sensors. I attempt to solve these problems by implimenting free spinning tracking wheels, a gyroscope, and a camera based GPS sensor that reads a barcode on robotics competition arena walls. The tracking wheels and gyroscope give an accurate short term position estimate, while the GPS corrects drift as a global reference with higher variance. I used an Extended Kalman Filter with a Jacobian Matrix accounting for error in discretizing the nonlinear motion equatio as the framework for this sensor fusion. The tracking wheels and gyroscope create a prior estimate of the state using the previous state and measured change in state. This runs at 100 Hz, having the estimation error grow with every prediction step. The GPS sensor runs an update stage at 10 Hz, removing some of the drift in the precdiction stage. Due to varying accuracy of the GPS readings related to obstructions to the camera, and motion blur from moving, the measurement covariance R is adaptive to these conditions. A baseline covariance matrix was found from testing the GPS while the robot was stationary, and an experimentally determined constant multiple of the trend in motion of the robot was added to this. The camera based GPS also flagged obstructions to it's image to update uncertainty accordingly.</p>
+  </section>
+  <section id="demos">
+    <h2>Demonstration</h2>
+    <p>Here is a side by side demonstration of the system tracking a path driven by the robot:</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <video width="100%" style="max-width: 480px;" autoplay loop muted playsinline>
+            <source src="IMG_5690.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video width="100%" style="max-width: 480px;" autoplay loop muted playsinline>
+            <source src="robot_animation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+  </section>
+  <section>
+    <h2>Overview</h2>
+    <p>This project was inspired by participating in a Vex University robotics competition February 2025. This was the first competition Merrimack College attended, learning valuable lessons from other successful teams. Although we performed well, placing third in qualifying rounds, the top two teams had a huge advantage over Merrimack: an efficient autonomous segment of the competition. Because the arena is set up for the autonomous portion in the same way every time in Vex competitions, the most important thing for your robot to know is where it is. In this project, I explore the limitations of the control system we used in the competition, and develop a competitive solution for future teams to use. This page is designed to be accesible to high school Vex Robotics teams, helping them impliment portions of the work I completed to their robots.</p>
+  </section>
+  <section>
+    <h2>Technical Highlights</h2>
+    <ul>
+      <li>Extended Kalman Filter with dynamic R matrix tuning</li>
+      <li>Gyroscope drift correction with global heading input</li>
+      <li>Tracking wheel odometry with slip modeling</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  Thanks for visiting!
+</footer>
+
+</body>
+</html>
