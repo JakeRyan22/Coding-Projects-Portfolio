@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,15 +13,18 @@
             line-height: 1.6;
             background-color: #f4f4f4;
         }
+
         header {
             background: #696969;
             color: #fff;
             padding: 20px;
             text-align: center;
         }
+
         nav {
             margin-top: 10px;
         }
+
         nav a {
             color: #fff;
             margin: 0 10px;
@@ -28,15 +32,18 @@
             font-weight: bold;
             display: inline-block;
         }
+
         main {
             padding: 20px;
         }
+
         section {
             padding: 20px;
             margin: 20px 0;
             background: #fff;
             border-radius: 8px;
         }
+
         footer {
             text-align: center;
             padding: 10px;
@@ -47,107 +54,132 @@
             width: 100%;
             margin-top: 20px;
         }
-    
+
         /* MOBILE RESPONSIVENESS */
         @media (max-width: 600px) {
             nav a {
                 display: block;
                 margin: 10px 0;
             }
+
             section {
                 margin: 10px 0;
                 padding: 15px;
             }
-        }.profile-pic {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    display: block;
-    margin: 10px auto;
-    }
-    .about-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+        }
 
-/* Stack vertically on small screens */
-@media (max-width: 600px) {
-    .about-content {
-        flex-direction: column;
-        text-align: center;
-    }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            margin: 10px auto;
+        }
 
-    .about-content p {
-        margin-top: 10px;
-    }
-}
-    .about-content {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* space between the image and text */
-}
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
-.about-content img {
-    flex-shrink: 0; /* don't let the image squish */
-}
+        /* Stack vertically on small screens */
+        @media (max-width: 600px) {
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
 
-.about-content p {
-    margin: 0; /* remove default margin for cleaner alignment */
-}
+            .about-content p {
+                margin-top: 10px;
+            }
+        }
 
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            /* space between the image and text */
+        }
+
+        .about-content img {
+            flex-shrink: 0;
+            /* don't let the image squish */
+        }
+
+        .about-content p {
+            margin: 0;
+            /* remove default margin for cleaner alignment */
+        }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>My Portfolio</h1>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
+    <header>
+        <h1>My Portfolio</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-<main>
-    <section id="about">
-        <h2>About Me</h2>
-        <div class="about-content">
-            <img src="myface.jpg" alt="My Photo" class="profile-pic">
-            <p>Hi! I am Jake, a 2025 Mechanical Engineering graduate from Merrimack College. I'm passionate about robotics, control systems, and automation. My experience includes implementing an Extended Kalman Filter in Simulink to perform sensor fusion for a skid-steer mobile robot. The EKF accounted for coordinate frame rotation during state propagation and corrected gyroscope drift using a global heading reference. I designed the system to dynamically adjust measurement uncertainty based on inputs, improving performance across varying motion conditions. I enjoy creating intuitive explanations for complex topics, and I’m always exploring new ways to combine software, math, and hardware to solve real-world problems. I'm currently seeking opportunities in robotics and autonomous systems where I can continue learning and building impactful solutions.</p>
-        </div>
-    </section>
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <img src="myface.jpg" alt="My Photo" class="profile-pic">
+                <p>Hi! I am Jake, a 2025 Mechanical Engineering graduate from Merrimack College. I'm passionate about
+                    robotics, control systems, and automation. My experience includes implementing an Extended Kalman
+                    Filter in Simulink to perform sensor fusion for a skid-steer mobile robot. The EKF accounted for
+                    coordinate frame rotation during state propagation and corrected gyroscope drift using a global
+                    heading reference. I designed the system to dynamically adjust measurement uncertainty based on
+                    inputs, improving performance across varying motion conditions. I enjoy creating intuitive
+                    explanations for complex topics, and I’m always exploring new ways to combine software, math, and
+                    hardware to solve real-world problems. I'm currently seeking opportunities in robotics and
+                    autonomous systems where I can continue learning and building impactful solutions.</p>
+            </div>
+        </section>
 
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>Here are a few cool things I've built:</p>
-        <ul>
-            <li>
-              <a href="projects/Odom_Project.html">
-                Senior Design: Odometry and Sensor Fusion
-              </a> – Built a skid steered robot with tracking wheels, a gyroscope, and a camera for position tracking. Implimented an Extended Kalman Filter that took the Odometry system (tracking wheels, gyroscope) as the input and used the camera as a global reference for the update stage. Variance in update measuement adapted for motion blur. Presented in poster format at Merrimack College Research and Creative Achievement Conference 2025.
-            </li>
-            <li>
-              <a href="projects/project2.html">Research: Human Robot Interaction
-              </a> – Programmed a commercial social robot to performatively read stories to library patrons. Designed an experiment deploying the robot into a local library to tell stories to people, gathering data through an optional survey post-interaction. Conference paper in progress, presented locally in poster format in Merrimack College Research and Creative Achievement Conference 2025. Submitted to IMECE: Engineering Innovation for a Resilient Future 2025 in poster format. 
-            </li>
-            <li>
-              <a href="projects/project3.html">Project 3
-              </a> – short description
-            </li>
-      </ul> 
-    </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <p>Here are a few cool things I've built:</p>
+            <ul>
+                <li>
+                    <a href="projects/Odom_Project.html">
+                        Senior Design: Odometry and Sensor Fusion
+                    </a> – Built a skid steered robot with tracking wheels, a gyroscope, and a camera for position
+                    tracking. Implimented an Extended Kalman Filter that took the Odometry system (tracking wheels,
+                    gyroscope) as the input and used the camera as a global reference for the update stage. Variance in
+                    update measuement adapted for motion blur. Presented in poster format at Merrimack College Research
+                    and Creative Achievement Conference 2025.
+                </li>
+                <li>
+                    <a href="projects/project2.html">Research: Human Robot Interaction
+                    </a> – Programmed a commercial social robot to performatively read stories to library patrons.
+                    Designed an experiment deploying the robot into a local library to tell stories to people, gathering
+                    data through an optional survey post-interaction. Conference paper in progress, presented locally in
+                    poster format in Merrimack College Research and Creative Achievement Conference 2025. Submitted to
+                    IMECE: Engineering Innovation for a Resilient Future 2025 in poster format.
+                </li>
+                <li>
+                    <a href="projects/project3.html">Project 3
+                    </a> – short description
+                </li>
+            </ul>
+        </section>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>You can reach me at: <a href="mailto:johnfryaniv@gmail.com">johnfryaniv@gmail.com</a></p>
-    </section>
-</main>
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>You can reach me at: <a href="mailto:johnfryaniv@gmail.com">johnfryaniv@gmail.com</a></p>
+        </section>
+    </main>
 
-<footer>
-    Thanks for visiting!
-</footer>
+    <footer>
+        Thanks for visiting!
+    </footer>
 
 </body>
+
 </html>
