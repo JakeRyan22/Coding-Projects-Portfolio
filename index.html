@@ -11,14 +11,20 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            background-color: #f4f4f4;
+            background: linear-gradient(to bottom right, #dfe9f3, #ffffff);
+            /* soft gradient background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
-            background: #696969;
+            background: rgba(105, 105, 105, 0.9);
             color: #fff;
             padding: 20px;
             text-align: center;
+            width: 100%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         nav {
@@ -34,38 +40,27 @@
         }
 
         main {
-            padding: 20px;
+            padding: 30px 20px;
+            max-width: 850px; /* squeezes content into center */
+            width: 100%;
         }
 
         section {
             padding: 20px;
             margin: 20px 0;
-            background: #fff;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         footer {
             text-align: center;
-            padding: 10px;
-            background: #696969;
+            padding: 15px;
+            background: rgba(105, 105, 105, 0.9);
             color: #fff;
-            position: relative;
-            bottom: 0;
             width: 100%;
-            margin-top: 20px;
-        }
-
-        /* MOBILE RESPONSIVENESS */
-        @media (max-width: 600px) {
-            nav a {
-                display: block;
-                margin: 10px 0;
-            }
-
-            section {
-                margin: 10px 0;
-                padding: 15px;
-            }
+            margin-top: 40px;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
         }
 
         .profile-pic {
@@ -83,8 +78,31 @@
             gap: 20px;
         }
 
-        /* Stack vertically on small screens */
+        .about-content img {
+            flex-shrink: 0;
+        }
+
+        .about-content p {
+            margin: 0;
+        }
+        
+
+        /* MOBILE RESPONSIVENESS */
         @media (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            section {
+                margin: 10px 0;
+                padding: 15px;
+            }
+
             .about-content {
                 flex-direction: column;
                 text-align: center;
@@ -93,23 +111,12 @@
             .about-content p {
                 margin-top: 10px;
             }
-        }
-
-        .about-content {
+            .about-text {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            /* space between the image and text */
+            flex-direction: column;
+            gap: 10px; /* space between paragraphs */
         }
 
-        .about-content img {
-            flex-shrink: 0;
-            /* don't let the image squish */
-        }
-
-        .about-content p {
-            margin: 0;
-            /* remove default margin for cleaner alignment */
         }
     </style>
 </head>
@@ -130,21 +137,26 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <img src="myface.jpg" alt="My Photo" class="profile-pic">
-                <p>Hi! I am Jake, a 2025 Mechanical Engineering graduate from Merrimack College. I'm passionate about
-                    robotics, control systems, and automation. My experience includes implementing an Extended Kalman
-                    Filter in Simulink to perform sensor fusion for a skid-steer mobile robot. The EKF accounted for
-                    coordinate frame rotation during state propagation and corrected gyroscope drift using a global
-                    heading reference. I designed the system to dynamically adjust measurement uncertainty based on
-                    inputs, improving performance across varying motion conditions. I enjoy creating intuitive
-                    explanations for complex topics, and I’m always exploring new ways to combine software, math, and
-                    hardware to solve real-world problems. I'm currently seeking opportunities in robotics and
-                    autonomous systems where I can continue learning and building impactful solutions.</p>
+                <div class="about-text">
+                    <p>Hi! I’m Jake, a 2025 Mechanical Engineering graduate and EIT from Merrimack College, currently 
+                    working at Quest Global as a Gas Turbine Controls Engineer. I’m interested in robotics, 
+                    control systems, and their real-world applications. My robotics experience includes implementing 
+                    an Extended Kalman Filter in MATLAB Simulink for sensor fusion on a skid-steer mobile robot. I 
+                    also served as a research assistant studying Human-Robot Interaction, exploring library patrons’ 
+                    reactions to Pepper, a social robot, with customized story-reading scripts.</p>
+                    <p>
+                        I have experience teaching STEM topics as a CRLA-certified tutor and enjoy creating intuitive 
+                        explanations for complex concepts. I’m always exploring ways to combine software, math, and 
+                        hardware to solve challenging problems. I’m currently seeking PhD programs for Fall 2026 in robotics, 
+                        autonomous systems, and controls, where I can continue learning, conducting impactful research, and 
+                        eventually mentoring the next generation of roboticists.
+                    </p>
+                </div>
             </div>
         </section>
 
         <section id="projects">
-            <h2>Projects</h2>
-            <p>Here are a few cool things I've built:</p>
+            <h2>Recent Projects</h2>
             <ul>
                 <li>
                     <a href="projects/Odom_Project.html">
@@ -156,17 +168,14 @@
                     and Creative Achievement Conference 2025.
                 </li>
                 <li>
-                    <a href="projects/project2.html">Research: Human Robot Interaction
+                    <a href="projects/HRIOnePager.pdf" target="_blank">
+                        Research: Human Robot Interaction
                     </a> – Programmed a commercial social robot to performatively read stories to library patrons.
                     Designed an experiment deploying the robot into a local library to tell stories to people, gathering
                     data through an optional survey post-interaction. Conference paper in progress, presented locally in
-                    poster format in Merrimack College Research and Creative Achievement Conference 2025. Submitted to
+                    poster format at Merrimack College Research and Creative Achievement Conference 2025. Submitted to
                     IMECE: Engineering Innovation for a Resilient Future 2025 in poster format.
                 </li>
-                <!-- <li>
-                    <a href="projects/project3.html">Project 3
-                    </a> – short description
-                </li> -->
             </ul>
         </section>
 
