@@ -1,28 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Under Construction</title>
-    <style>
-        body {
-            background-color: #f9f9f9;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 100px 20px;
-            color: #333;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Senior Design Project</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        background-color: #f4f4f4;
+    }
+    header {
+        background: #696969;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+    nav {
+        margin-top: 10px;
+    }
+    nav a {
+        color: #fff;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+    }
+    main {
+        padding: 20px;
+    }
+    section {
+        padding: 20px;
+        margin: 20px 0;
+        background: #fff;
+        border-radius: 8px;
+    }
+    footer {
+        text-align: center;
+        padding: 10px;
+        background: #696969;
+        color: #fff;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* MOBILE RESPONSIVENESS */
+    @media (max-width: 600px) {
+        nav a {
+            display: block;
+            margin: 10px 0;
         }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        section {
+            margin: 10px 0;
+            padding: 15px;
         }
-        p {
-            font-size: 1.2rem;
-        }
-    </style>
+    }
+  </style>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
-    <h1>🚧 Under Construction 🚧</h1>
-    <p>This page is currently being built. Please check back soon!</p>
+
+<header>
+  <h1>Senior Design: Odometry and Sensor Fusion</h1>
+  <nav>
+    <a href="../index.html">Home</a>
+  </nav>
+</header>
+
+<main>
+  <section>
+    <h2>Abstract</h2>
+    <p>Tracking the position of a wheeled mobile robot is conceptually intuitive, but challenging to implement in practice. Common issues include unpredictable wheel dynamics under varying slip conditions, drift in measurements taken in the robot’s body frame, and the high, dynamic variance of global reference sensors. </p>
+    <p>To address these problems, I implemented free spinning tracking wheels, a gyroscope, and a camera based GPS sensor that reads barcodes on robotics competition arena walls. The tracking wheels and gyroscope give accurate short term position estimates, while the GPS corrects drift as a global reference with higher variance.</p>
+    <p>I used an Extended Kalman Filter (EKF) as the sensor fusion framework, with a Jacobian Matrix to linearize the non-linear motion model. The prediction step runs at 100 Hz, using the tracking wheels and gyroscope to propagate the state based on measured changes in the robot's body frame. Since this prediction accumulates error over time, the GPS sensor performs a correction step at 10 Hz helping constrain long-term drift.</p> 
+    <p>Due to variability in GPS accuracy related to camera obstructions and motion blur, the measurement covariance R is adaptive to these conditions. A baseline covariance matrix was found from testing the GPS while the robot was stationary, and an experimentally determined constant multiple of the trend in motion of the robot was added to this. The camera based GPS also flagged obstructions to its image to update uncertainty accordingly.</p>
+  </section>
+
+  <section id="demos">
+    <h2>Demonstration</h2>
+    <p>The simplest way to show this project is through a video demonstration. This video serves as a proof of concept for a position tracking system that can be optimized to help score more points in future robotics competitions.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <video width="100%" style="max-width: 480px;" autoplay loop muted playsinline>
+            <source src="IMG_5690.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video width="100%" style="max-width: 480px;" autoplay loop muted playsinline>
+            <source src="robot_animation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+  </section>
+
+  <section>
+    <h2>Background</h2>
+    <p>
+      This project was completed as the second half of my year-long Senior Design course. For the first part, my team and I designed a Vex University robot to participate in a competition between other local colleges. We placed third in qualifying matches before being eliminated in a bracket against one of the top teams globally. One of the biggest differences between successful and unsuccessful teams was the quality of autonomous performance. This motivated me to work on developing a more robust position tracking system that combined odometry, a 6-axis IMU, and global frame measurements from a camera.
+    </p>
+    <p>
+      The case of a differential drive robot moving in a 2D plane (<a href="https://www.researchgate.net/figure/Differential-drive-mobile-robot_fig1_375428144" target="_blank">Figure 1</a>) is well documented, and the corresponding kinematic equations are commonly used in competition code. In fact, the default Vex autonomous drive libraries are based on this model. However, these equations assume no horizontal slip, which is not realistic for the way most Vex robots are designed.
+    </p>
+    <figure>
+      <img src="DDMR.jpg" alt="Differential Drive Robot Diagram" style="max-width: 100%; height: auto;" />
+      <figcaption>Figure 1 – Differential Drive Mobile Robot Diagram</figcaption>
+    </figure>
+    <p>
+      Most Vex robots use multiple wheels on each side, driven together with several motors, which allows for fast acceleration in timed competitions. However, to turn, these robots rely on horizontal slip so that an instantaneous center of zero velocity (ICZV) can exist, which is required by rigid body planar motion. Without slip, there can be no single point perpendicular to all motion vectors. This effect is even more pronounced with omni-directional wheels, which are commonly used to increase maneuverability (Figure 2).
+    </p>
+    <figure>
+      <img src="OmniWheel.jpg" alt="Omni Directional Wheel" style="max-width: 100%; height: auto;" />
+      <figcaption>Figure 2 – Omni-directional wheel used in Vex robots</figcaption>
+    </figure>
+    <p>
+      Many teams compensate for this by adding free-spinning tracking wheels with encoders in a configuration that captures lateral slippage (Figure 3). This results in a reliable odometry system that is sufficient for most competition robots. The main drawback, however, is the lack of a global reference. If the robot is pushed off course or experiences accumulated bias, the tracking wheels alone cannot detect or correct this drift.
+    </p>
+    <figure>
+      <img src="TrackerWheels.jpg" alt="Tracking Wheel Setup" style="max-width: 100%; height: auto;" />
+      <figcaption>Figure 3 – Tracker wheel odometry system</figcaption>
+    </figure>
+    <p>
+      To address this, I explored using a camera to read codes placed on competition arena walls, providing an unbiased global reference. The Vex GPS sensor works in this way, but in practice it is rarely used due to its limitations. As a camera-based system, it struggles with blur during motion, frame vibrations, and a slow refresh rate with processing lag. Because odometry systems are already so reliable, most teams don’t attempt to integrate the GPS sensor.
+    </p>
+    <p>
+      However, I found that by combining the strengths of the GPS sensor with a proven odometry and IMU setup, a more robust system could be achieved. I implemented an Extended Kalman Filter (EKF) to handle the nonlinear motion model. The prediction step ran at 100 Hz using the odometry and gyroscope, while the GPS provided global corrections at a slower rate. The measurement noise covariance (R) was tuned dynamically to account for motion blur and signal reliability, allowing the system to adapt to changing conditions.
+    </p>
+    <p>
+      The result was a working proof-of-concept system that demonstrated improved robustness compared to odometry alone. While I did not have time to formally log residuals or conduct a full performance study, I successfully produced a real-time demonstration video showing the EKF in action.
+    </p>
+  </section>
+
+  <section>
+    <h2>Technical Highlights</h2>
+    <ul>
+      <li>Extended Kalman Filter with dynamic R matrix tuning</li>
+      <li>Gyroscope drift correction with global heading input</li>
+      <li>Tracking wheel odometry with slip modeling</li>
+      <li>Integration of camera-based GPS as a global reference</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  Thanks for visiting!
+</footer>
+
 </body>
 </html>
