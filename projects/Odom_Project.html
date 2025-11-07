@@ -265,6 +265,41 @@
         <figcaption><strong>Equation 6.</strong> Update stage</figcaption>
         <img src="Equations/Update_Stage.jpg" alt="Update Stage Equation" style="display: block; margin: 0 auto; max-width: 60%;">
       </figure>
+      <p>
+        Due to time constraints on this project, the covariance matrices used in the prediction and update stages were implemented as estimated placeholders. With additional time for testing, the variance of each individual sensor could have been measured and used to populate these matrices empirically. However, monitoring live sensor data showed that it was highly dependent on motion and environmental conditions. For example, the V5 GPS camera readings were affected by arena obstructions, motion blur during turns, and frame vibrations that excited the camera mounting pole, all of which increased measurement variance. As a result, controlled experiments such as driving in a straight line or performing a 90-degree turn would have produced covariance matrices that failed to capture this dynamic behavior.
+      </p>
+
+      <p>
+        Rather than dedicating limited time to tuning static covariance matrices, I developed heuristic adaptations that adjusted the measurement covariance R matrix under varying motion conditions. The filter began with a baseline diagonal matrix representing the minimum observed variances of the V5 GPS measurements (x, y, θ) under static, unobstructed conditions. This baseline assumed that sensor uncertainty could only increase during motion or blockage.
+      </p>
+
+      <ul>
+        <li><strong>Angular velocity term</strong> – a constant multiple of the low-passed magnitude of angular velocity, representing increased uncertainty from motion blur during turns.</li>
+        <li><strong>Linear acceleration term</strong> – a constant multiple of the low-passed magnitude of linear acceleration (from the IMU), representing vibrations within the frame and oscillations of the camera pole.</li>
+        <li><strong>Camera obstruction term</strong> – a growing variance applied when the GPS camera view was obstructed, resetting when the camera regained visibility.</li>
+      </ul>
+
+      <p>
+        The latter behavior was identified through experimentation, which revealed that the internal IMU of the V5 GPS sensor took over during visual occlusion, causing the reported uncertainty to grow unbounded until the camera view was restored. However, the built-in uncertainty values were not responsive to motion, only to obstructions, so they were not suitable replacements for the adaptive R matrix.
+      </p>
+
+      <p>
+        Low-passing the angular velocity and acceleration terms smoothed out abrupt sensor noise and produced gradual adaptations. This approach also reflected the real physical behavior of the system. Vibrations decayed over time following acceleration spikes, so a filtered signal naturally captured the rise and fall of uncertainty as the robot stabilized.
+      </p>
+
+      <p>
+        Flowcharts outlining the implementation (Figures 7 and 8) illustrate how the Kalman Filter operates using a small memory window that stores the previous output. While not every nuance is depicted, the diagrams convey the overall logic and flow of the system.
+      </p>
+        <figure style="flex: 1; min-width: 280px; text-align: center;">
+          <img src="Base_FC.jpg" alt="Base Flowchart" style="width: 100%; max-width: 1000px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <figcaption><strong>Figure 7.</strong> Base Level Flowchart</figcaption>
+        </figure>
+
+        <figure style="flex: 1; min-width: 280px; text-align: center;">
+          <img src="Filter_FC.jpg" alt="Adaptive Filter Flowchart" style="width: 100%; max-width: 1000px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <figcaption><strong>Figure 8.</strong> Customized Kalman Filter Flowchart</figcaption>
+        </figure>
+
     </section>
   </section>
   <section>
@@ -304,6 +339,9 @@
     </figure>
 
   </div>
+</section>
+<section>
+  <h2>Conclusion</h2>
 </section>
 </main>
 
