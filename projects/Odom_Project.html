@@ -292,18 +292,23 @@
       </p>
         <figure style="flex: 1; min-width: 280px; text-align: center;">
           <img src="Base_FC.jpg" alt="Base Flowchart" style="width: 100%; max-width: 1000px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-          <figcaption><strong>Figure 7.</strong> Base Level Flowchart</figcaption>
+          <figcaption><strong>Figure 4.</strong> Base Level Flowchart</figcaption>
         </figure>
 
         <figure style="flex: 1; min-width: 280px; text-align: center;">
           <img src="Filter_FC.jpg" alt="Adaptive Filter Flowchart" style="width: 100%; max-width: 1000px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-          <figcaption><strong>Figure 8.</strong> Customized Kalman Filter Flowchart</figcaption>
+          <figcaption><strong>Figure 5.</strong> Customized Kalman Filter Flowchart</figcaption>
         </figure>
 
     </section>
   </section>
   <section>
     <h2>Results</h2>
+    <p> 
+        Results from experimentation with the described sensor fusion framework show a tracking system that logs the robot's pose in real time. To demonstrate how this works,
+        data from a trial run is used to generate a 2D rendering of the robot driving around the Vex competition playing field. This is played next to a video of the data collection
+        to see how the robot tracks its position in real time.
+    </p>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 30px;">
 
     <!-- Video 1 -->
@@ -318,7 +323,7 @@
         <source src="IMG_5690.mp4" type="video/mp4">
       </video>
       <figcaption>
-        <strong>Figure 4:</strong> Test Video of Robot Tracking
+        <strong>Figure 6:</strong> Test Video of Robot Tracking
       </figcaption>
     </figure>
 
@@ -334,7 +339,7 @@
         <source src="robot_animation.mp4" type="video/mp4">
       </video>
       <figcaption>
-        <strong>Figure 5:</strong> Robot Trajectory Render from Tracking System Data
+        <strong>Figure 7:</strong> Robot Trajectory Render from Tracking System Data
       </figcaption>
     </figure>
 
@@ -342,6 +347,17 @@
 </section>
 <section>
   <h2>Conclusion</h2>
+  <p>
+    Despite the challenges of designing and implementing an accurate position tracking system for a robotics competition, a working 
+    framework was developed unique to the problem. This builds a foundation for improvements with experimental tuning and 
+    additional sensors. With more data, the system could be further developed through analysis of sensor residuals. 
+    By categorizing GPS measurements between camera obstruction and non-obstruction events, motion-dependent covariance terms 
+    could be optimized independent of camera obstructions to better reflect the robot’s behavior. Furthermore, integrating more sensors, 
+    such as LIDAR for localization based on landmarks in the robotics competition arena would provide an additional update stage 
+    through an independent pose estimate improving robustness. Together, these approaches would create a robust system adaptive
+    to real-world variations founded upon experimental data and the framework developed.
+
+  </p>
 </section>
 </main>
 
